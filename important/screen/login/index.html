@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Favotel</title>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <nav class="py-3 py-md-4">
+            <div
+                class="container d-flex justify-content-between align-items-center"
+            >
+                <ul
+                    class="nav-list m-0 list-unstyled order-lg-1 order-2 d-none d-md-flex"
+                >
+                    <li class="nav-item mr-4">
+                        <a href="#" class="font-weight-bold text-primary"
+                            >Beranda</a
+                        >
+                    </li>
+                    <li class="nav-item mr-4">
+                        <a href="#" class="font-weight-bold text-primary"
+                            >Ruangan</a
+                        >
+                    </li>
+                    <li class="nav-item mr-4">
+                        <a href="#" class="font-weight-bold text-primary"
+                            >Fasilitas</a
+                        >
+                    </li>
+                </ul>
+                <div class="nav-brand order-lg-2 order-1">
+                    <img src="logo.svg" alt="" />
+                </div>
+                <div
+                    class="nav-btn text-right order-lg-3 order-3 d-none d-md-block"
+                >
+                    <a href="#" class="btn btn-primary spacing-2">MASUK</a>
+                </div>
+                <button
+                    id="nav-menu--open"
+                    class="order-2 border-0 bg-transparent p-2 d-block d-md-none"
+                >
+                    <img src="menu.svg" alt="" />
+                </button>
+            </div>
+            <ul
+                id="menu-list"
+                class="position-fixed flex-column list-unstyled bg-primary pt-3 pr-3 pb-4 pl-4 d-flex d-md-none"
+            >
+                <li class="menu-item mb-5 text-right">
+                    <button
+                        id="nav-menu--close"
+                        class="border-0 bg-transparent p-2"
+                    >
+                        <img src="close.svg" alt="" />
+                    </button>
+                </li>
+                <li class="menu-item mb-3">
+                    <a href="#" class="font-weight-bold text-primary"
+                        >Beranda</a
+                    >
+                </li>
+                <li class="menu-item mb-3">
+                    <a href="#" class="font-weight-bold text-primary"
+                        >Ruangan</a
+                    >
+                </li>
+                <li class="menu-item mb-5">
+                    <a href="#" class="font-weight-bold text-primary"
+                        >Fasilitas</a
+                    >
+                </li>
+                <li class="menu-item mb-3">
+                    <a href="#" class="btn btn-primary spacing-2">MASUK</a>
+                </li>
+            </ul>
+        </nav>
+
+        <main>
+            <section id="login" class="py-5">
+                <div class="container">
+                    <div class="login-header text-center pb-5">
+                        <h6 class="font-weight-bold text-primary spacing-4">
+                            AUTENTIKASI
+                        </h6>
+                        <h1
+                            class="font-weight-bold text-secondary spacing-2 text-type-secondary"
+                        >
+                            SIGN IN
+                        </h1>
+                    </div>
+                    <div
+                        class="login-body text-center d-flex justify-content-center align-items-center py-5"
+                    >
+                        <form action="" method="post" class="login-form">
+                            <div
+                                class="form-group text-left font-weight-bold spacing-1"
+                            >
+                                <label for="username" class="text-primary"
+                                    >Username</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control font-weight-bold font-weight-bold bg-transparent border-0 rounded-0 px-0 text-secondary"
+                                    id="username"
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <div
+                                class="form-group text-left font-weight-bold spacing-1"
+                            >
+                                <label for="password" class="text-primary"
+                                    >Password</label
+                                >
+                                <input
+                                    type="password"
+                                    class="form-control font-weight-bold font-weight-bold bg-transparent border-0 rounded-0 px-0 text-secondary"
+                                    id="password"
+                                    autocomplete="off"
+                                />
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn btn-primary btn-lg w-100 mt-2"
+                            >
+                                MASUK
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            const elList = document.getElementById("menu-list");
+            const elMenuOpen = document.getElementById("nav-menu--open");
+            const elMenuClose = document.getElementById("nav-menu--close");
+
+            elMenuOpen.addEventListener("click", () => {
+                elList;
+                if (elList.classList[length - 1] == undefined) {
+                    elList.classList.add("active");
+                } else {
+                    elList.classList.remove("active");
+                }
+            });
+
+            elMenuClose.addEventListener("click", () => {
+                if (elList.classList[length - 1] == undefined) {
+                    elList.classList.remove("active");
+                } else {
+                    elList.classList.add("active");
+                }
+            });
+        </script>
+    </body>
+</html>
