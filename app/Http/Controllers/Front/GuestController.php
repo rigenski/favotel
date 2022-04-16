@@ -14,7 +14,7 @@ class GuestController extends Controller
     {
         $guest = Guest::where('user_id', auth()->user()->id)->get()[0];
 
-        $reservations = Reservation::all();
+        $reservations = Reservation::where('guest_id', auth()->user()->guest->id)->paginate(5);
 
         return view('/pages/guest', compact('guest', 'reservations'));
     }

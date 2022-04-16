@@ -41,6 +41,7 @@ Route::group(['middleware' => ['auth', 'checkRole:guest']], function () {
   Route::get('/checkout', [Front\CheckoutController::class, 'index'])->name('checkout');
   Route::post('/checkout/store', [Front\CheckoutController::class, 'store'])->name('checkout.store');
   Route::get('/result', [Front\ResultController::class, 'index'])->name('result');
+  Route::get('/result/{id}/print', [Front\ResultController::class, 'print'])->name('result.print');
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
@@ -81,7 +82,9 @@ Route::group(['middleware' => ['auth', 'checkRole:admin']], function () {
 Route::group(['middleware' => ['auth', 'checkRole:receptionist']], function () {
   // RESERVATIONS
   Route::get('/admin/reservations', [ReservationController::class, 'index'])->name('admin.reservations');
+  Route::post('/admin/reservations/{id}/update', [ReservationController::class, 'update'])->name('admin.reservations.update');
   Route::get('/admin/reservations/{id}/destroy', [ReservationController::class, 'destroy'])->name('admin.reservations.destroy');
+  Route::get('/admin/reservations/{id}/print', [ReservationController::class, 'print'])->name('admin.reservations.print');
 });
 
 Route::group(['middleware' => ['auth', 'checkRole:admin,receptionist']], function () {

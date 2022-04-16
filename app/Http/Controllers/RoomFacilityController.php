@@ -16,9 +16,9 @@ class RoomFacilityController extends Controller
         $rooms = Room::all();
 
         if ($request->has('room_type')) {
-            $room_facilities = RoomFacility::where('room_id', $filter->room_type)->get();
+            $room_facilities = RoomFacility::where('room_id', $filter->room_type)->paginate(5);
         } else {
-            $room_facilities = RoomFacility::where('room_id', $rooms[0]->id)->get();
+            $room_facilities = RoomFacility::where('room_id', $rooms[0]->id)->paginate(5);
         }
 
         return view('/pages/admin/room-facilities/index', compact('filter', 'room_facilities', 'rooms'));

@@ -33,7 +33,7 @@
       * <b>DATA KAMAR</b> TIDAK ADA / BELUM DITAMBAHKAN
     </div>
     @endif
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
       <table class="table table-striped table-bordered data">
         <thead>
           <tr>
@@ -46,21 +46,20 @@
           </tr>
         </thead>
         <tbody>
-          <?php $count = 1; ?>
-          @foreach ($rooms as $data)
+          @foreach ($rooms as $key => $room)
           <tr>
-            <td>{{ $count }}</td>
+            <td>{{ $rooms->firstItem() + $key }}</td>
             <td>
               <img
-                src="{{ $data->image ? asset('/images/uploads/rooms/' . $data->image) : asset('/images/admin-not-found.svg') }}"
+                src="{{ $room->image ? asset('/images/uploads/rooms/' . $room->image) : asset('/images/admin-not-found.svg') }}"
                 alt="" style="max-height: 100px;max-width: 100px;">
             </td>
-            <td>{{ $data->name }}</td>
-            <td>{{ $data->cost }}</td>
-            <td>{{ $data->total_rooms }}</td>
+            <td>{{ $room->name }}</td>
+            <td>{{ $room->price }}</td>
+            <td>{{ $room->total_rooms }}</td>
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
-                onclick="$('#modal-detail #detail-name').text('{{ $data->name }}');$('#modal-detail #detail-cost').text('{{ $data->cost }}');$('#modal-detail #detail-total_rooms').text('{{ $data->total_rooms }}');$('#modal-detail #detail-image').attr('src', '{{ $data->image ? asset('/images/uploads/rooms/' . $data->image) : asset('/images/not-found.png') }}');">Detail</a>
+                onclick="$('#modal-detail #detail-name').text('{{ $room->name }}');$('#modal-detail #detail-price').text('{{ $room->price }}');$('#modal-detail #detail-total_rooms').text('{{ $room->total_rooms }}');$('#modal-detail #detail-image').attr('src', '{{ $room->image ? asset('/images/uploads/rooms/' . $room->image) : asset('/images/not-found.png') }}');">Detail</a>
               <div class="dropdown d-inline">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,17 +67,19 @@
                 </button>
                 <div class="dropdown-menu">
                   <a href="#modal-edit" data-toggle="modal" class="dropdown-item text-warning font-weight-bold"
-                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/rooms/{{ $data->id }}/update');$('#modal-edit #name').attr('value', '{{ $data->name }}');$('#modal-edit #cost').attr('value', '{{ $data->cost }}');$('#modal-edit #total_rooms').attr('value', '{{ $data->total_rooms }}');">Edit</a>
+                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/rooms/{{ $room->id }}/update');$('#modal-edit #name').attr('value', '{{ $room->name }}');$('#modal-edit #price').attr('value', '{{ $room->price }}');$('#modal-edit #total_rooms').attr('value', '{{ $room->total_rooms }}');">Edit</a>
                   <a href=" #modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/rooms/{{ $data->id }}/destroy');$('#modal-delete #delete-name').text('{{ $data->name }}');$('#modal-delete #delete-cost').text('{{ $data->cost }}');;$('#modal-delete #delete-total_rooms').text('{{ $data->total_rooms }}');$('#modal-delete #delete-image').attr('src', '{{ $data->image ? asset('/images/uploads/rooms/' . $data->image) : asset('/images/not-found.png') }}');">Hapus</a>
+                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/rooms/{{ $room->id }}/destroy');$('#modal-delete #delete-name').text('{{ $room->name }}');$('#modal-delete #delete-price').text('{{ $room->price }}');;$('#modal-delete #delete-total_rooms').text('{{ $room->total_rooms }}');$('#modal-delete #delete-image').attr('src', '{{ $room->image ? asset('/images/uploads/rooms/' . $room->image) : asset('/images/not-found.png') }}');">Hapus</a>
                 </div>
               </div>
             </td>
           </tr>
-          <?php $count++ ?>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      {{ $rooms->links() }}
     </div>
   </div>
 </div>
@@ -105,8 +106,9 @@
           <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
         </div>
         <div class="form-group">
-          <label for="cost">Biaya <span class="text-danger">*</span></label>
-          <input type="number" class="form-control @error('cost') is-invalid @enderror" id="cost" name="cost" required>
+          <label for="price">Biaya <span class="text-danger">*</span></label>
+          <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price"
+            required>
         </div>
         <div class="form-group">
           <label for="total_rooms">Jumlah Kamar <span class="text-danger">*</span></label>
@@ -148,7 +150,7 @@
           <tr class="align-top">
             <td>Harga</td>
             <td class="px-2">:</td>
-            <td class="font-weight-bold text-dark" id="detail-cost"></td>
+            <td class="font-weight-bold text-dark" id="detail-price"></td>
           </tr>
           <tr class="align-top">
             <td>Jumlah Kamar</td>
@@ -189,8 +191,9 @@
           <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" required>
         </div>
         <div class="form-group">
-          <label for="cost">Harga <span class="text-danger">*</span></label>
-          <input type="number" class="form-control @error('cost') is-invalid @enderror" id="cost" name="cost" required>
+          <label for="price">Harga <span class="text-danger">*</span></label>
+          <input type="number" class="form-control @error('price') is-invalid @enderror" id="price" name="price"
+            required>
         </div>
         <div class="form-group">
           <label for="total_rooms">Jumlah Kamar <span class="text-danger">*</span></label>
@@ -231,7 +234,7 @@
           <tr class="align-top">
             <td>Harga</td>
             <td class="px-2">:</td>
-            <td class="font-weight-bold text-dark" id="delete-cost"></td>
+            <td class="font-weight-bold text-dark" id="delete-price"></td>
           </tr>
           <tr class="align-top">
             <td>Jumlah Kamar</td>

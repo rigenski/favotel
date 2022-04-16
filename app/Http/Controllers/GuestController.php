@@ -8,11 +8,17 @@ use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $guests = Guest::all();
+        $filter = $request;
 
-        return view('/pages/admin/guests/index', compact('guests'));
+        if ($filter->keyword) {
+            $guests = Guest::where('name', 'like', "%" . $filter->keyword . "%")->paginate(5);
+        } else {
+            $guests = Guest::paginate(5);
+        }
+
+        return view('/pages/admin/guests/index', compact('filter', 'guests'));
     }
 
     public function destroy($id)

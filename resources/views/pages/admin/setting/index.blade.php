@@ -65,7 +65,8 @@
       <label for="logo" class="col-sm-3 col-form-label">Logo</label>
       <div class="col-sm-9">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" accept="image/png, image/jpeg" id="logo" name="logo">
+          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="logo"
+            name="logo">
           <label class="custom-file-label" for="customFile">Choose file</label>
         </div>
         @if($setting->logo)

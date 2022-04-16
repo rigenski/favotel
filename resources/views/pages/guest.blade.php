@@ -41,7 +41,7 @@
     <div class="guest-body">
       <a href="{{ route('checkout') }}" class="btn btn-primary mb-4">Tambah
         Reservasi</a>
-      <div class="table-responsive">
+      <div class="table-responsive mb-2">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -55,10 +55,9 @@
             </tr>
           </thead>
           <tbody>
-            <?php $count = 1; ?>
-            @foreach($reservations as $reservation)
+            @foreach($reservations as $key => $reservation)
             <tr>
-              <td>{{ $count }}</td>
+              <td>{{ $reservations->firstItem() + $key }}</td>
               <td>
                 @if($reservation->status == 'process')
                 <span class="badge badge-warning">
@@ -81,17 +80,27 @@
               <td>{{ $reservation->check_in }}</td>
               <td>{{ $reservation->check_out }}</td>
               <td>{{ $reservation->total_rooms }}</td>
-              <td>{{ $reservation->total_cost }}</td>
+              <?php
+                $first_day = new DateTime($reservation->check_in);
+                $last_day = new DateTime($reservation->check_out);
+                $interval = $first_day->diff($last_day);
+                $total_days = $interval->format('%a');
+
+                $total_price = $reservation->room->price * $reservation->total_rooms * $total_days;
+              ?>
+              <td>{{ $total_price }}</td>
               <td>
-                <a href="#" class="btn btn-success">
+                <a href="{{ route('result.print', ['id' => $reservation->id]) }}" class="btn btn-success">
                   Cetak
                 </a>
               </td>
             </tr>
-            <?php $count++ ?>
             @endforeach
           </tbody>
         </table>
+      </div>
+      <div class="pagination">
+        {{ $reservations->links() }}
       </div>
     </div>
   </div>

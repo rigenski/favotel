@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -11,7 +12,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::all();
+        $rooms = Room::paginate(2);
 
         return view('/pages/admin/rooms/index', compact('rooms'));
     }
@@ -20,7 +21,7 @@ class RoomController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'cost' => 'required',
+            'price' => 'required',
             'total_rooms' => 'required',
         ]);
 
@@ -30,7 +31,7 @@ class RoomController extends Controller
 
         $room = Room::create([
             'name' => $request->name,
-            'cost' => $request->cost,
+            'price' => $request->price,
             'total_rooms' => $request->total_rooms,
         ]);
 
@@ -49,7 +50,7 @@ class RoomController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'cost' => 'required',
+            'price' => 'required',
             'total_rooms' => 'required',
         ]);
 
@@ -61,7 +62,7 @@ class RoomController extends Controller
 
         $room->update([
             'name' => $request->name,
-            'cost' => $request->cost,
+            'price' => $request->price,
             'total_rooms' => $request->total_rooms,
         ]);
 

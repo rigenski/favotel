@@ -33,50 +33,72 @@
       * <b>DATA RESERVASI</b> TIDAK ADA / BELUM DITAMBAHKAN
     </div>
     @endif
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
       <table class="table table-striped table-bordered data">
         <thead>
           <tr>
             <th scope="col">No</th>
+            <th scope="col">Status</th>
             <th scope="col">Nama Tamu</th>
-            <th scope="col">Jumlah Kamar</th>
             <th scope="col">Tanggal Check In</th>
             <th scope="col">Tanggal Check Out</th>
+            <th scope="col">Total Kamar</th>
+            <th scope="col">Jumlah</th>
             <th scope="col">Aksi</th>
           </tr>
         </thead>
         <tbody>
-          <?php $count = 1; ?>
-          @foreach ($reservations as $data)
+          @foreach ($reservations as $key => $reservation)
           <tr>
-            <td>{{ $count }}</td>
-            @if($data->guest)
-            <td>{{ $data->guest->name }}</td>
-            @else
-            <td class="font-weight-bold text-danger">Data Belum Lengkap</td>
-            @endif
-            <td>{{ $data->total_rooms }}</td>
-            <td>{{ date('d-m-Y', strtotime($data->check_in)) }}</td>
-            <td>{{ date('d-m-Y', strtotime($data->check_out)) }}</td>
+            <td>{{ $reservations->firstItem() + $key }}</td>
             <td>
-              <a href="#modal-detail" data-toggle="modal" class="btn btn-primary mr-2"
-                onclick="$('#modal-detail #detail-check_in').text('{{ $data->check_in }}');$('#modal-detail #detail-check_out').text('{{ $data->check_out }}');$('#modal-detail #detail-total_rooms').text('{{ $data->total_rooms }}');$('#modal-detail #detail-guest').text('{{ $data->guest->name }}');$('#modal-detail #detail-email').text('{{ $data->guest->email }}');$('#modal-detail #detail-phone').text('{{ $data->guest->phone }}');$('#modal-detail #detail-room_type').text('{{ $data->room->name }}');">Detail</a>
-              <div class="dropdown d-inline">
-                <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton"
-                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Lainya
-                </button>
-                <div class="dropdown-menu">
-                  <a href="#modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/reservations/{{ $data->id }}/destroy');$('#modal-delete #delete-check_in').text('{{ $data->check_in }}');$('#modal-delete #delete-check_out').text('{{ $data->check_out }}');$('#modal-delete #delete-total_rooms').text('{{ $data->total_rooms }}');$('#modal-delete #delete-guest').text('{{ $data->guest->name }}');$('#modal-delete #delete-email').text('{{ $data->guest->email }}');$('#modal-delete #delete-phone').text('{{ $data->guest->phone }}');$('#modal-delete #delete-room_type').text('{{ $data->room->name }}');">Hapus</a>
-                </div>
-              </div>
+              @if($reservation->status == 'process')
+              <span class="badge badge-warning">
+                PROSES
+              </span>
+              @elseif($reservation->status == 'check-in')
+              <span class="badge badge-success">
+                CHECK-IN
+              </span>
+              @elseif($reservation->status == 'check-out')
+              <span class="badge badge-info">
+                CHECK-OUT
+              </span>
+              @elseif($reservation->status == 'cancel')
+              <span class="badge badge-danger">
+                BATAL
+              </span>
+              @endif
+            </td>
+            <td>{{ $reservation->guest_name }}</td>
+            <td>{{ date('d-m-Y', strtotime($reservation->check_in)) }}</td>
+            <td>{{ date('d-m-Y', strtotime($reservation->check_out)) }}</td>
+            <td>{{ $reservation->total_rooms }}</td>
+            <?php
+                $first_day = new DateTime($reservation->check_in);
+                $last_day = new DateTime($reservation->check_out);
+                $interval = $first_day->diff($last_day);
+                $total_days = $interval->format('%a');
+
+                $total_price = $reservation->room->price * $reservation->total_rooms * $total_days;
+              ?>
+            <td>Rp. {{ $total_price }}</td>
+            <td>
+              <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
+                onclick="$('#modal-detail #detail-guest').text('{{ $reservation->guest_name }}');$('#modal-detail #detail-email').text('{{ $reservation->email }}');$('#modal-detail #detail-phone').text('{{ $reservation->phone }}');$('#modal-detail #detail-check_in').text('{{ $reservation->check_in }}');$('#modal-detail #detail-check_out').text('{{ $reservation->check_out }}');$('#modal-detail #detail-room_type').text('{{ $reservation->room->name }}');$('#modal-detail #detail-total_rooms').text('{{ $reservation->total_rooms }}');$('#modal-detail #detail-total_days').text('{{ $total_days }}');$('#modal-detail #detail-total_rooms2').text('{{ $reservation->total_rooms }}');$('#modal-detail #detail-room_price').text('{{ $reservation->room->price }}');$('#modal-detail #detail-total_price').text('{{ $total_price }}');">Detail</a>
+              <a href="#modal-edit" data-toggle="modal" class="btn btn-warning m-1"
+                onclick="$('#modal-edit #edit-guest').text('{{ $reservation->guest_name }}');$('#modal-edit #edit-email').text('{{ $reservation->email }}');$('#modal-edit #edit-phone').text('{{ $reservation->phone }}');$('#modal-edit #edit-check_in').text('{{ $reservation->check_in }}');$('#modal-edit #edit-check_out').text('{{ $reservation->check_out }}');$('#modal-edit #edit-room_type').text('{{ $reservation->room->name }}');$('#modal-edit #edit-total_rooms').text('{{ $reservation->total_rooms }}');$('#modal-edit #edit-total_price').text('{{ $total_price }}');$('#modal-edit #form-edit').attr('action', '/admin/reservations/{{ $reservation->id }}/update');$('#modal-edit #status--select').text('{{ $reservation->status == 'process' ? 'PROSES' : ( $reservation->status == 'check-in' ? 'CHECK-IN' : ( $reservation->status == 'check-out' ? 'CHECK-OUT' : ( $reservation->status == 'cancel' ? 'CANCEL ' : '' ) ) ) }}');$('#modal-edit #status--select').attr('value', '{{ $reservation->status }}');">Edit</a>
+              <a href="{{ route('admin.reservations.print', ['id' => $reservation->id]) }}"
+                class="btn btn-success m-1">Cetak</a>
             </td>
           </tr>
-          <?php $count++ ?>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      {{ $reservations->appends(['check_in' => $filter->check_in ? $filter->check_in : '', 'guest' => $filter->guest
+      ? $filter->guest : '' ])->links() }}
     </div>
   </div>
 </div>
@@ -87,8 +109,7 @@
 <div class="modal fade" id="modal-filter" data-backdrop="static" data-keyboard="false" tabindex="-1"
   aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="form-create" class="modal-content" action="" method="get">
-      @csrf
+    <form id="form-create" class="modal-content" action="{{ route('admin.reservations') }}" method="get">
       <div class="modal-header">
         <h5 class="modal-title text-dark" id="staticBackdropLabel">Filter Data <span
             class="text-primary">Reservasi</span></h5>
@@ -98,25 +119,22 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="room_type">Tipe <span class="text-danger">*</span></label>
-          <select class="form-control @error('name') is-invalid @enderror" name="room_type" id="room_type">
-            <option value="Medium">Check-In</option>
-            <option value="Basic">Nama Tamu</option>
-          </select>
+          <label for="check-in">Tanggal Check-In</label>
+          <input type="date" class="form-control @error('check-in') is-invalid @enderror" id="check_in" name="check_in"
+            value="{{ $filter->check_in ? $filter->check_in : '' }}">
         </div>
-        <div class="form-group">
-          <label for="check-in">Check-In <span class="text-danger">*</span></label>
-          <input type="date" class="form-control @error('check-in') is-invalid @enderror" id="check-in" name="check-in"
-            required>
-        </div>
-        <div class="form-group">
-          <label for="guest">Nama Tamu <span class="text-danger">*</span></label>
-          <input type="text" class="form-control @error('guest') is-invalid @enderror" id="guest" name="guest" required>
+        <div class=" form-group">
+          <label for="guest">Nama Tamu</label>
+          <input type="text" class="form-control @error('guest') is-invalid @enderror" id="guest" name="guest"
+            value="{{ $filter->guest ? $filter->guest : '' }}">
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kembali</button>
-        <button type="submit" class="btn btn-primary">Cari</button>
+      <div class="modal-footer justify-content-between">
+        <a href="{{ route('admin.reservations') }}" class="btn btn-warning m-0"><i class="fas fa-retweet"></i></a>
+        <div>
+          <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Kembali</button>
+          <button type="submit" class="btn btn-primary">Cari</button>
+        </div>
       </div>
     </form>
   </div>
@@ -134,22 +152,8 @@
       </div>
       <div class="modal-body">
         <h6 class="text-center text-primary">Informasi</h6>
-        <table>
-          <tr class="align-top">
-            <td>Tanggal Check-in</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="detail-check_in"></b></td>
-          </tr>
-          <tr class="align-top">
-            <td>Tanggal Check-out</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="detail-check_out"></b></td>
-          </tr>
-          <tr class="align-top">
-            <td>Jumlah Kamar</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="detail-total_rooms"></b></td>
-          </tr>
+        <h6 class="text-primary">Detail Tamu</h6>
+        <table class="mb-4">
           <tr class="align-top">
             <td>Nama Tamu</td>
             <td class="px-2">:</td>
@@ -165,10 +169,51 @@
             <td class="px-2">:</td>
             <td><b class="text-dark" id="detail-phone"></b></td>
           </tr>
+        </table>
+        <h6 class="text-primary">Detail Reservasi</h6>
+        <table class="mb-4">
+          <tr class="align-top">
+            <td>Tanggal Check-in</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-check_in"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Tanggal Check-out</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-check_out"></b></td>
+          </tr>
           <tr class="align-top">
             <td>Tipe Kamar</td>
             <td class="px-2">:</td>
             <td><b class="text-dark" id="detail-room_type"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Total Kamar</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-total_rooms"></b></td>
+          </tr>
+        </table>
+        <h6 class="text-primary">Detail Pembelian</h6>
+        <table class="mb-4">
+          <tr class="align-top">
+            <td>Total Hari</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-total_days"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Total Kamar</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-total_rooms2"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Harga Kamar</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-room_price"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Jumlah</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="detail-total_price"></b></td>
           </tr>
         </table>
       </div>
@@ -178,63 +223,79 @@
     </div>
   </div>
 </div>
-{{-- MODAL DELETE --}}
-<div class="modal fade" id="modal-delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- MODAL EDIT --}}
+<div class="modal fade" id="modal-edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="form-delete" class="modal-content" action="" method="get">
+    <form id="form-edit" class="modal-content" action="" method="post">
+      @csrf
       <div class="modal-header">
-        <h5 class="modal-title text-dark" id="exampleModalLabel">Yakin Hapus Data <span
-            class="text-primary">Reservasi</span> Ini ?</h5>
+        <h5 class="modal-title text-dark" id="exampleModalLabel">Edit Data <span class="text-primary">Reservasi</span>
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <h6 class="text-center text-primary">Informasi</h6>
-        <table>
-          <tr class="align-top">
-            <td>Tanggal Check-in</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-check_in"></b></td>
-          </tr>
-          <tr class="align-top">
-            <td>Tanggal Check-out</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-check_out"></b></td>
-          </tr>
-          <tr class="align-top">
-            <td>Jumlah Kamar</td>
-            <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-total_rooms"></b></td>
-          </tr>
+        <table class="mb-4">
           <tr class="align-top">
             <td>Nama Tamu</td>
             <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-guest"></b></td>
+            <td><b class="text-dark" id="edit-guest"></b></td>
           </tr>
           <tr class="align-top">
             <td>Email</td>
             <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-email"></b></td>
+            <td><b class="text-dark" id="edit-email"></b></td>
           </tr>
           <tr class="align-top">
             <td>No. HP</td>
             <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-phone"></b></td>
+            <td><b class="text-dark" id="edit-phone"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Tanggal Check-in</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="edit-check_in"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Tanggal Check-out</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="edit-check_out"></b></td>
           </tr>
           <tr class="align-top">
             <td>Tipe Kamar</td>
             <td class="px-2">:</td>
-            <td><b class="text-dark" id="delete-room_type"></b></td>
+            <td><b class="text-dark" id="edit-room_type"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Total Kamar</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="edit-total_rooms"></b></td>
+          </tr>
+          <tr class="align-top">
+            <td>Jumlah</td>
+            <td class="px-2">:</td>
+            <td><b class="text-dark" id="edit-total_price"></b></td>
           </tr>
         </table>
+        <div class="form-group">
+          <label for="status">Status</label>
+          <select class="form-control @error('name') is-invalid @enderror" name="status" id="status">
+            <option value="" id="status--select" class="bg-secondary"></option>
+            @foreach($status as $data)
+            <option value="{{ $data }}">{{ $data == 'process' ? 'PROSES' : ( $data == 'check-in' ? 'CHECK-IN' : ( $data
+              ==
+              'check-out' ? 'CHECK-OUT' : ( $data == 'cancel' ? 'CANCEL ' : '' ) ) ) }}</option>
+            @endforeach
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Tidak</button>
-        <button type="submit" class="btn btn-danger">Hapus</button>
+        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Tutup</button>
+        <button type="submit" class="btn btn-primary">Simpan</button>
       </div>
     </form>
   </div>
-</div>
 </div>
 @endsection

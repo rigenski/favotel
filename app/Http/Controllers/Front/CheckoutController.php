@@ -36,15 +36,6 @@ class CheckoutController extends Controller
             return redirect()->back()->with('error', 'Data Reservasi kurang lengkap!');
         }
 
-        $room = Room::find($request->room_type);
-
-        $first_day = new DateTime($request->check_in);
-        $last_day = new DateTime($request->check_out);
-        $interval = $first_day->diff($last_day);
-        $total_days = $interval->format('%a');
-
-        $total_cost = $room->cost * $request->total_rooms * $total_days;
-
         $reservation = Reservation::create([
             'check_in' => $request->check_in,
             'check_out' => $request->check_out,
@@ -52,8 +43,7 @@ class CheckoutController extends Controller
             'guest_name' => $request->guest_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'status' => 'proccess',
-            'total_cost' => $total_cost,
+            'status' => 'process',
             'room_id' => $request->room_type,
             'guest_id' => auth()->user()->guest->id,
         ]);

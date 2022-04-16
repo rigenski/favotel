@@ -11,7 +11,7 @@ class ReceptionistController extends Controller
 {
     public function index()
     {
-        $receptionists = Receptionist::all();
+        $receptionists = Receptionist::paginate(5);
 
         return view('/pages/admin/receptionists/index', compact('receptionists'));
     }

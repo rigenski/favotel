@@ -13,7 +13,6 @@
           <a href="{{ route('checkout') }}" class="btn btn-lg btn-success spacing-2">PESAN SEKARANG</a>
         </div>
       </div>
-      <p></p>
     </div>
     <div class="room-body">
       <div class="row">
@@ -23,7 +22,7 @@
             style="background-image: url('{{ $room->image ? asset('images/uploads/rooms/' . $room->image ) : asset('images/app-not-found.svg' ) }}');height: 240px;background-position: center;">
           </div>
           <h4 class="font-weight-bold text-secondary text-type-secondary mb-1 mb-md-2">{{ ucfirst($room->name) }}</h4>
-          <p class="text-primary m-0"><b>Fasilitas:</b>
+          <p class="text-primary m-0"><b class="text-secondary">Fasilitas:</b>
             @foreach($room->room_facility as $room_facility)
             {{ $room_facility->facility }},
             @endforeach

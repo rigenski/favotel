@@ -11,7 +11,7 @@ class HotelFacilityController extends Controller
 {
     public function index()
     {
-        $hotel_facilities = HotelFacility::all();
+        $hotel_facilities = HotelFacility::paginate(5);
 
         return view('/pages/admin/hotel-facilities/index', compact('hotel_facilities'));
     }

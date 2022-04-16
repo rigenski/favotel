@@ -33,7 +33,7 @@
       * <b>DATA FASILITAS HOTEL</b> TIDAK ADA / BELUM DITAMBAHKAN
     </div>
     @endif
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
       <table class="table table-striped table-bordered data">
         <thead>
           <tr>
@@ -45,20 +45,19 @@
           </tr>
         </thead>
         <tbody>
-          <?php $count = 1; ?>
-          @foreach ($hotel_facilities as $data)
+          @foreach ($hotel_facilities as $key => $hotel_facility)
           <tr>
-            <td>{{ $count }}</td>
+            <td>{{ $hotel_facilities->firstItem() + $key }}</td>
             <td>
               <img
-                src="{{ $data->image ? asset('/images/uploads/hotel-facilities/' . $data->image) : asset('/images/admin-not-found.svg') }}"
+                src="{{ $hotel_facility->image ? asset('/images/uploads/hotel-facilities/' . $hotel_facility->image) : asset('/images/admin-not-found.svg') }}"
                 alt="" style="max-height: 100px;max-width: 100px;">
             </td>
-            <td>{{ $data->name }}</td>
-            <td>{{ substr( $data->description, 0, 40) }}</td>
+            <td>{{ $hotel_facility->name }}</td>
+            <td>{{ substr( $hotel_facility->description, 0, 40) }}</td>
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
-                onclick="$('#modal-detail #detail-name').text('{{ $data->name }}');$('#modal-detail #detail-description').text('{{ $data->description }}');$('#modal-detail #detail-image').attr('src', '{{ $data->image ? asset('/images/uploads/hotel-facilities/' . $data->image) : asset('/images/not-found.png') }}');">Detail</a>
+                onclick="$('#modal-detail #detail-name').text('{{ $hotel_facility->name }}');$('#modal-detail #detail-description').text('{{ $hotel_facility->description }}');$('#modal-detail #detail-image').attr('src', '{{ $hotel_facility->image ? asset('/images/uploads/hotel-facilities/' . $hotel_facility->image) : asset('/images/not-found.png') }}');">Detail</a>
               <div class="dropdown d-inline">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,17 +65,19 @@
                 </button>
                 <div class="dropdown-menu">
                   <a href="#modal-edit" data-toggle="modal" class="dropdown-item text-warning font-weight-bold"
-                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/hotel-facilities/{{ $data->id }}/update');$('#modal-edit #name').attr('value', '{{ $data->name }}');$('#modal-edit #description').attr('value', '{{ $data->description }}');">Edit</a>
+                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/hotel-facilities/{{ $hotel_facility->id }}/update');$('#modal-edit #name').attr('value', '{{ $hotel_facility->name }}');$('#modal-edit #description').attr('value', '{{ $hotel_facility->description }}');">Edit</a>
                   <a href="#modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/hotel-facilities/{{ $data->id }}/destroy');$('#modal-delete #delete-name').text('{{ $data->name }}');$('#modal-delete #delete-description').text('{{ $data->description }}');$('#modal-delete #delete-image').attr('src', '{{ $data->image ? asset('/images/uploads/hotel-facilities/' . $data->image) : asset('/images/not-found.png') }}');">Hapus</a>
+                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/hotel-facilities/{{ $hotel_facility->id }}/destroy');$('#modal-delete #delete-name').text('{{ $hotel_facility->name }}');$('#modal-delete #delete-description').text('{{ $hotel_facility->description }}');$('#modal-delete #delete-image').attr('src', '{{ $hotel_facility->image ? asset('/images/uploads/hotel-facilities/' . $hotel_facility->image) : asset('/images/not-found.png') }}');">Hapus</a>
                 </div>
               </div>
             </td>
           </tr>
-          <?php $count++ ?>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      {{ $hotel_facilities->links() }}
     </div>
   </div>
 </div>

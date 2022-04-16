@@ -33,7 +33,7 @@
       * <b>DATA RESEPSIONIS</b> TIDAK ADA / BELUM DITAMBAHKAN
     </div>
     @endif
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
       <table class="table table-striped table-bordered data">
         <thead>
           <tr>
@@ -44,15 +44,14 @@
           </tr>
         </thead>
         <tbody>
-          <?php $count = 1; ?>
-          @foreach ($receptionists as $data)
+          @foreach ($receptionists as $key => $receptionist)
           <tr>
-            <td>{{ $count }}</td>
-            <td>{{ $data->user->username }}</td>
-            <td>{{ $data->name }}</td>
+            <td>{{ $receptionists->firstItem() + $key }}</td>
+            <td>{{ $receptionist->user->username }}</td>
+            <td>{{ $receptionist->name }}</td>
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
-                onclick="$('#modal-detail #detail-name').text('{{ $data->name }}');$('#modal-detail #detail-username').text('{{ $data->user->username }}');">Detail</a>
+                onclick="$('#modal-detail #detail-name').text('{{ $receptionist->name }}');$('#modal-detail #detail-username').text('{{ $receptionist->user->username }}');">Detail</a>
               <div class="dropdown d-inline">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,17 +59,19 @@
                 </button>
                 <div class="dropdown-menu">
                   <a href="#modal-edit" data-toggle="modal" class="dropdown-item text-warning font-weight-bold"
-                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/receptionists/{{ $data->id }}/update');$('#modal-edit #name').attr('value', '{{ $data->name }}');$('#modal-edit #username').attr('value', '{{ $data->user->username }}');">Edit</a>
+                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/receptionists/{{ $receptionist->id }}/update');$('#modal-edit #name').attr('value', '{{ $receptionist->name }}');$('#modal-edit #username').attr('value', '{{ $receptionist->user->username }}');">Edit</a>
                   <a href=" #modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/receptionists/{{ $data->id }}/destroy');$('#modal-delete #delete-name').text('{{ $data->name }}');$('#modal-delete #delete-username').text('{{ $data->user->username }}');">Hapus</a>
+                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/receptionists/{{ $receptionist->id }}/destroy');$('#modal-delete #delete-name').text('{{ $receptionist->name }}');$('#modal-delete #delete-username').text('{{ $receptionist->user->username }}');">Hapus</a>
                 </div>
               </div>
             </td>
           </tr>
-          <?php $count++ ?>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      {{ $receptionists->links() }}
     </div>
   </div>
 </div>

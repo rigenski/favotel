@@ -10,7 +10,12 @@
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
         <i class="fas fa-user mr-2"></i>
-        <div class="d-sm-none d-lg-inline-block">Hi, Admin</div>
+        <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->role == 'admin' ?
+          'Admin' :
+          ( auth()->user()->role
+          == 'receptionist' ?
+          auth()->user()->receptionist->name : 'Anonim' )}}
+        </div>
       </a>
       <div class="dropdown-menu dropdown-menu-right">
         <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger">

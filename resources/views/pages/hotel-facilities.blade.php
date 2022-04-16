@@ -21,8 +21,8 @@
           <div class="w-100 mb-3 mb-md-4"
             style="background-image: url({{ $hotel_facility->image ? asset('images/uploads/rooms/' . $hotel_facility->image ) : asset('images/app-not-found.svg' ) }});height: 320px;background-position: center;">
           </div>
-          <p class="text-primary mb-1 mb-md-2">{{ $hotel_facility->name }}</p>
-          <h4 class="font-weight-bold text-secondary text-type-secondary m-0">{{ $hotel_facility->description }}</h4>
+          <p class="text-primary mb-1 mb-md-2">{{ $hotel_facility->description }}</p>
+          <h5 class="font-weight-bold text-secondary text-type-secondary m-0">{{ $hotel_facility->name }}</h5>
         </div>
         @endforeach
       </div>

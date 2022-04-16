@@ -38,7 +38,7 @@
       TIDAK ADA
     </div>
     @endif
-    <div class="table-responsive">
+    <div class="table-responsive mb-2">
       <table class="table table-striped table-bordered data">
         <thead>
           <tr>
@@ -49,15 +49,14 @@
           </tr>
         </thead>
         <tbody>
-          <?php $count = 1; ?>
-          @foreach ($room_facilities as $data)
+          @foreach ($room_facilities as $key => $room_facility)
           <tr>
-            <td>{{ $count }}</td>
-            <td>{{ $data->room->name }}</td>
-            <td>{{ $data->facility }}</td>
+            <td>{{ $room_facilities->firstItem() + $key }}</td>
+            <td>{{ $room_facility->room->name }}</td>
+            <td>{{ $room_facility->facility }}</td>
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
-                onclick="$('#modal-detail #detail-room_type').text('{{ $data->room->name }}');$('#modal-detail #detail-facility').text('{{ $data->facility }}');">Detail</a>
+                onclick="$('#modal-detail #detail-room_type').text('{{ $room_facility->room->name }}');$('#modal-detail #detail-facility').text('{{ $room_facility->facility }}');">Detail</a>
               <div class="dropdown d-inline">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,17 +64,23 @@
                 </button>
                 <div class="dropdown-menu">
                   <a href="#modal-edit" data-toggle="modal" class="dropdown-item text-warning font-weight-bold"
-                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/room-facilities/{{ $data->id }}/update');$('#modal-edit #room_type--select').attr('value', '{{ $data->room->id }}');$('#modal-edit #room_type--select').text('{{ $data->room->name }}');$('#modal-edit #facility').attr('value', '{{ $data->facility }}');">Edit</a>
+                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/update');$('#modal-edit #room_type--select').attr('value', '{{ $room_facility->room->id }}');$('#modal-edit #room_type--select').text('{{ $room_facility->room->name }}');$('#modal-edit #facility').attr('value', '{{ $room_facility->facility }}');">Edit</a>
                   <a href="#modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/room-facilities/{{ $data->id }}/destroy');$('#modal-delete #delete-room_type').text('{{ $data->room->name }}');$('#modal-delete #delete-facility').text('{{ $data->facility }}');">Hapus</a>
+                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/destroy');$('#modal-delete #delete-room_type').text('{{ $room_facility->room->name }}');$('#modal-delete #delete-facility').text('{{ $room_facility->facility }}');">Hapus</a>
                 </div>
               </div>
             </td>
           </tr>
-          <?php $count++ ?>
           @endforeach
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      @if($filter->room_type)
+      {{ $room_facilities->appends(['room_type' => $filter->room_type ? $filter->room_type : ''])->links() }}
+      @else
+      {{ $room_facilities->links() }}
+      @endif
     </div>
   </div>
 </div>
