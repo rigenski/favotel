@@ -34,21 +34,28 @@
             const elMenuOpen = document.getElementById("nav-menu--open");
             const elMenuClose = document.getElementById("nav-menu--close");
 
-            elMenuOpen.addEventListener("click", () => {
-                elList;
-                if (elList.classList[length - 1] == undefined) {
+            const hideNav = () => {
+              if (elList.classList[length - 1] == undefined) {
+                    elList.classList.remove("active");
+                } else {
+                    elList.classList.add("active");
+                }
+            }
+
+            const showNav = () => {
+              if (elList.classList[length - 1] == undefined) {
                     elList.classList.add("active");
                 } else {
                     elList.classList.remove("active");
                 }
+            }
+
+            elMenuOpen.addEventListener("click", () => {
+                showNav();
             });
 
             elMenuClose.addEventListener("click", () => {
-                if (elList.classList[length - 1] == undefined) {
-                    elList.classList.remove("active");
-                } else {
-                    elList.classList.add("active");
-                }
+                hideNav();
             });
   </script>
 
