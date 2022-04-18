@@ -36,7 +36,7 @@ class RoomFacilityController extends Controller
         }
 
         RoomFacility::create([
-            'facility' => $request->facility,
+            'name' => $request->facility,
             'room_id' => $request->room_type,
         ]);
 
@@ -57,7 +57,7 @@ class RoomFacilityController extends Controller
         $room_facility = RoomFacility::find($id);
 
         $room_facility->update([
-            'facility' => $request->facility,
+            'name' => $request->facility,
             'room_id' => $request->room_type,
         ]);
 

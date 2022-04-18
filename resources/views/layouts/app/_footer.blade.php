@@ -3,10 +3,10 @@
     <div class="d-flex justify-content-between mb-4">
       <div class="">
         <a href="{{ route('home') }}">
-          <h4 class="font-weight-bold text-light text-type-secondary">Favotel</h4>
+          <h4 class="font-weight-bold text-light text-type-secondary">{{ count($setting) ? $setting[0]->name : 'Hotel
+            Title' }}</h4>
         </a>
-        <p class="text-light">Vestibulum ante ipsum primis in faucibus
-          orci luctus et ultrices posuere cubilia.</p>
+        <p class="text-light">{{ count($setting) ? $setting[0]->name : 'This is hotel description.' }}</p>
       </div>
       <div>
         <ul class="m-0 list-unstyled d-none d-lg-flex">
@@ -22,6 +22,7 @@
         </ul>
       </div>
     </div>
-    <p class="text-light text-center m-0">All right reserved &copy;favotel 2022</p>
+    <p class="text-light text-center m-0">All right reserved &copy; {{ count($setting) ? $setting[0]->name : 'Hotel
+      Title' }} {{ date('Y') }}</p>
   </div>
 </footer>

@@ -12,10 +12,10 @@
       </div>
       <div class="card-wrap">
         <div class="card-header">
-          <h4>Lorem Ipsum</h4>
+          <h4>Total Reservasi</h4>
         </div>
         <div class="card-body">
-
+          {{ count($reservations) }}
         </div>
       </div>
     </div>
@@ -27,10 +27,10 @@
       </div>
       <div class="card-wrap">
         <div class="card-header">
-          <h4>Lorem Ipsum</h4>
+          <h4>Total Kamar</h4>
         </div>
         <div class="card-body">
-
+          {{ count($rooms) }}
         </div>
       </div>
     </div>
@@ -42,21 +42,13 @@
       </div>
       <div class="card-wrap">
         <div class="card-header">
-          <h4>Lorem Ipsum</h4>
+          <h4>Total Tamu</h4>
         </div>
         <div class="card-body">
-
+          {{ count($guests) }}
         </div>
       </div>
     </div>
-  </div>
-</div>
-<div class="card mb-4">
-  <div class="card-header">
-
-  </div>
-  <div class="card-body">
-
   </div>
 </div>
 @endsection

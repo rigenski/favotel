@@ -50,7 +50,7 @@
             <td>{{ $hotel_facilities->firstItem() + $key }}</td>
             <td>
               <img
-                src="{{ $hotel_facility->image ? asset('/images/uploads/hotel-facilities/' . $hotel_facility->image) : asset('/images/admin-not-found.svg') }}"
+                src="{{ $hotel_facility->image ? asset('/images/uploads/hotel-facilities/' . $hotel_facility->image) : asset('/images/admin-dummy.svg') }}"
                 alt="" style="max-height: 100px;max-width: 100px;">
             </td>
             <td>{{ $hotel_facility->name }}</td>

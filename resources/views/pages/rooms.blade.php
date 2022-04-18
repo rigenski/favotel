@@ -18,13 +18,13 @@
       <div class="row">
         @foreach ($rooms as $room)
         <div class="col-12 col-md-6 col-lg-4 mb-4">
-          <div class="w-100 mb-3 mb-md-4"
-            style="background-image: url('{{ $room->image ? asset('images/uploads/rooms/' . $room->image ) : asset('images/app-not-found.svg' ) }}');height: 240px;background-position: center;">
-          </div>
+          <img
+            src="{{ $room->image ? asset('images/uploads/rooms/' . $room->image ) : asset('images/app-dummy.svg' ) }}"
+            alt="" class="w-100 mb-3 mb-md-4" style="height: 240px;object-fit: cover;">
           <h4 class="font-weight-bold text-secondary text-type-secondary mb-1 mb-md-2">{{ ucfirst($room->name) }}</h4>
           <p class="text-primary m-0"><b class="text-secondary">Fasilitas:</b>
             @foreach($room->room_facility as $room_facility)
-            {{ $room_facility->facility }},
+            {{ $room_facility->name }},
             @endforeach
           </p>
         </div>

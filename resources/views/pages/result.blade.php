@@ -89,7 +89,7 @@
                       Tipe Kamar
                     </td>
                     <td class="px-0 py-0 pl-3 font-weight-semibold text-secondary">
-                      : {{ $reservation->room->name }}
+                      : {{ $room['name'] }}
                     </td>
                   </tr>
                   <tr class="mb-2">
@@ -109,10 +109,10 @@
                 <table class="table table-borderless table-responsive">
                   <tr class="mb-2">
                     <td class="px-0 py-0">
-                      Total Hari
+                      Harga Kamar
                     </td>
                     <td class="px-0 py-0 pl-3 font-weight-semibold text-secondary">
-                      : {{ $total_days }}
+                      : Rp. {{ $room['price'] }}
                     </td>
                   </tr>
                   <tr class="mb-2">
@@ -125,10 +125,10 @@
                   </tr>
                   <tr class="mb-2">
                     <td class="px-0 py-0">
-                      Harga Kamar
+                      Total Hari
                     </td>
                     <td class="px-0 py-0 pl-3 font-weight-semibold text-secondary">
-                      : Rp. {{ $reservation->room->price }}
+                      : {{ $total_days }}
                     </td>
                   </tr>
                   <tr class="mb-2">

@@ -542,8 +542,14 @@ a.text-primary:hover {
 /* STYLE */
 
 .hero-top {
-    height: 560px;
+    height: 480px;
     background-color: #FCF2DC;
+}
+
+@media screen and (min-width: 768px) {
+  .hero-top {
+    height: 560px;
+  }
 }
 
 .hero-bottom {
@@ -552,24 +558,53 @@ a.text-primary:hover {
 }
 
 .hero-image {
-    margin-top: -460px;
+    margin-top: -420px;
     left: 0;
     height: 560px;
-    background: rgb(126, 126, 126);
     object-fit: cover;
     background-position: center top;
     background-size: 100%;
 }
 
+@media screen and (min-width: 768px) {
+  .hero-image {
+    margin-top: -460px;
+  }
+}
+
 .hero-box {
+    padding: 0;
+}
+
+@media screen and (min-width: 576px) {
+  .hero-box {
+    padding: 0 24px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .hero-box {
+    padding: 0 64px;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .hero-box {
     padding: 0 128px;
+  }
 }
  
 .hero-list {
-    margin-top: 32px;
+    margin-top: -76px;
     z-index: 10;
     position: absolute;
     width: 100%;
-    height: 128px;
     background: #fff;
 }
+
+@media screen and (min-width: 768px) {
+  .hero-list {
+    margin-top: 32px;
+  }
+}
+

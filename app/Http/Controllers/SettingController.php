@@ -49,11 +49,19 @@ class SettingController extends Controller
                 'address' => $request->address,
             ]);
 
-            if ($request->hasFile('logo')) {
+            if ($request->hasFile('short_logo')) {
                 $rand = Str::random(20);
-                $name_image = $rand . "." . $request->logo->getClientOriginalExtension();
-                $request->file('logo')->move('images/uploads/setting', $name_image);
-                $setting->logo = $name_image;
+                $name_image = $rand . "." . $request->short_logo->getClientOriginalExtension();
+                $request->file('short_logo')->move('images/uploads/setting', $name_image);
+                $setting->short_logo = $name_image;
+                $setting->save();
+            }
+
+            if ($request->hasFile('long_logo')) {
+                $rand = Str::random(20);
+                $name_image = $rand . "." . $request->long_logo->getClientOriginalExtension();
+                $request->file('long_logo')->move('images/uploads/setting', $name_image);
+                $setting->long_logo = $name_image;
                 $setting->save();
             }
         } else {
@@ -65,11 +73,19 @@ class SettingController extends Controller
                 'address' => $request->address,
             ]);
 
-            if ($request->hasFile('logo')) {
+            if ($request->hasFile('short_logo')) {
                 $rand = Str::random(20);
-                $name_image = $rand . "." . $request->logo->getClientOriginalExtension();
-                $request->file('logo')->move('images/uploads/setting', $name_image);
-                $setting->logo = $name_image;
+                $name_image = $rand . "." . $request->short_logo->getClientOriginalExtension();
+                $request->file('short_logo')->move('images/uploads/setting', $name_image);
+                $setting->short_logo = $name_image;
+                $setting->save();
+            }
+
+            if ($request->hasFile('long_logo')) {
+                $rand = Str::random(20);
+                $name_image = $rand . "." . $request->long_logo->getClientOriginalExtension();
+                $request->file('long_logo')->move('images/uploads/setting', $name_image);
+                $setting->long_logo = $name_image;
                 $setting->save();
             }
         }

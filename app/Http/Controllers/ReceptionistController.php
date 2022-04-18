@@ -81,7 +81,6 @@ class ReceptionistController extends Controller
 
         User::find($receptionist->user_id)->delete();
 
-
         return redirect()->back()->with('success', 'Data Resepsionis berhasil dihapus');
     }
 }

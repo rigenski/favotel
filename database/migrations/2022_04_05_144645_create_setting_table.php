@@ -20,7 +20,8 @@ class CreateSettingTable extends Migration
             $table->string('email');
             $table->string('phone');
             $table->string('address');
-            $table->string('logo')->nullable();
+            $table->string('short_logo')->nullable();
+            $table->string('long_logo')->nullable();
             $table->timestamps();
         });
     }

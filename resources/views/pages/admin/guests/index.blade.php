@@ -52,7 +52,6 @@
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
                 onclick="$('#modal-detail #detail-name').text('{{ $guest->name }}');$('#modal-detail #detail-email').text('{{ $guest->email }}');$('#modal-detail #detail-phone').text('{{ $guest->phone }}');$('#modal-detail #detail-address').text('{{ $guest->address }}');">Detail</a>
-              <a href=" #" class="btn btn-success m-1">Histori</a>
               <div class="dropdown d-inline mr-2">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

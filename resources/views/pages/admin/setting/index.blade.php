@@ -33,47 +33,69 @@
     <div class="form-group row">
       <label for="name" class="col-sm-3 col-form-label">Nama <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="name" name="name" value="{{ $setting->name }}" required>
+        <input type="text" class="form-control" id="name" name="name" value="{{ $setting->name }}" autocomplete="off"
+          required>
       </div>
     </div>
     <div class="form-group row">
       <label for="description" class="col-sm-3 col-form-label">Deskripsi <span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <input type="text" class="form-control" id="description" name="description" value="{{ $setting->description }}"
-          required>
+          autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="email" class="col-sm-3 col-form-label">Email <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="email" name="email" value="{{ $setting->email }}" required>
+        <input type="email" class="form-control" id="email" name="email" value="{{ $setting->email }}"
+          autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="phone" class="col-sm-3 col-form-label">No. HP <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="phone" name="phone" value="{{ $setting->phone }}" required>
+        <input type="text" class="form-control" id="phone" name="phone" value="{{ $setting->phone }}" autocomplete="off"
+          required>
       </div>
     </div>
     <div class="form-group row">
       <label for="address" class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="address" name="address" value="{{ $setting->address }}" required>
+        <input type="text" class="form-control" id="address" name="address" value="{{ $setting->address }}"
+          autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
-      <label for="logo" class="col-sm-3 col-form-label">Logo</label>
+      <label for="short_logo" class="col-sm-3 col-form-label">Logo Kecil</label>
       <div class="col-sm-9">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="logo"
-            name="logo">
-          <label class="custom-file-label" for="customFile">Choose file</label>
+          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="short_logo"
+            name="short_logo" autocomplete="off">
+          <label class="custom-file-label" for="short_logo">Pilih Gambar</label>
         </div>
-        @if($setting->logo)
+        @if($setting->short_logo)
         <div class="d-flex flex-column mt-4">
           <label for="logo_sekarang" class="mb-4 ml-2 text-primary"><b>[ Logo Sekarang
               ]</b></label>
-          <img src="{{ asset('./images/uploads/setting/' . $setting->logo ) }}" alt="Logo Hotel"
+          <img src="{{ asset('./images/uploads/setting/' . $setting->short_logo ) }}" alt="Favicon Hotel"
+            style="max-width: 80px">
+        </div>
+        @endif
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="long_logo" class="col-sm-3 col-form-label">Logo Besar</label>
+      <div class="col-sm-9">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="long_logo"
+            name="long_logo" autocomplete="off">
+          <label class="custom-file-label" for="long_logo">Pilih Gambar</label>
+        </div>
+        @if($setting->long_logo)
+        <div class="d-flex flex-column mt-4">
+          <label for="logo_sekarang" class="mb-4 ml-2 text-primary"><b>[ Logo Sekarang
+              ]</b></label>
+          <img src="{{ asset('./images/uploads/setting/' . $setting->long_logo ) }}" alt="Logo Hotel"
             style="max-width: 140px">
         </div>
         @endif
@@ -83,39 +105,50 @@
     <div class="form-group row">
       <label for="name" class="col-sm-3 col-form-label">Nama <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="name" name="name" required>
+        <input type="text" class="form-control" id="name" name="name" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="description" class="col-sm-3 col-form-label">Deskripsi <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="description" name="description" required>
+        <input type="text" class="form-control" id="description" name="description" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="email" class="col-sm-3 col-form-label">Email <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="email" name="email" required>
+        <input type="email" class="form-control" id="email" name="email" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="phone" class="col-sm-3 col-form-label">No. HP <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="phone" name="phone" required>
+        <input type="text" class="form-control" id="phone" name="phone" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
       <label for="address" class="col-sm-3 col-form-label">Alamat <span class="text-danger">*</span></label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" id="address" name="address" required>
+        <input type="text" class="form-control" id="address" name="address" autocomplete="off" required>
       </div>
     </div>
     <div class="form-group row">
-      <label for="logo" class="col-sm-3 col-form-label">Logo</label>
+      <label for="short_logo" class="col-sm-3 col-form-label">Logo Kecil <span class="text-danger">*</span></label>
       <div class="col-sm-9">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" accept="image/png, image/jpeg" id="logo" name="logo">
-          <label class="custom-file-label" for="customFile">Choose file</label>
+          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="short_logo"
+            name="short_logo" autocomplete="off" required>
+          <label class="custom-file-label" for="short_logo">Pilih Gambar</label>
+        </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="long_logo" class="col-sm-3 col-form-label">Logo Besar <span class="text-danger">*</span></label>
+      <div class="col-sm-9">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" accept="image/png, image/jpeg, image/svg+xml" id="long_logo"
+            name="long_logo" autocomplete="off" required>
+          <label class="custom-file-label" for="logo">Pilih Gambar</label>
         </div>
       </div>
     </div>

@@ -70,8 +70,8 @@ class ReservationController extends Controller
 
         $total_price = $reservation->room->price * $reservation->total_rooms * $total_days;
 
-        $long_logo = asset('/images/long-logo.svg');
-        $short_logo = asset('/images/short-logo.svg');
+        $long_logo = asset('/images/uploads/setting/' . $setting->long_logo);
+        $short_logo = asset('/images/uploads/setting/' . $setting->short_logo);
 
         $el_status = '';
 

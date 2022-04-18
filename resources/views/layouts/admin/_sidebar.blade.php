@@ -1,6 +1,6 @@
 <aside id="sidebar-wrapper">
   <div class="sidebar-brand">
-    <a href="{{ route('admin') }}">FAVOTEL</a>
+    <a href="{{ route('admin') }}">{{ count($setting) ? $setting[0]->name : 'Hotel Title' }}</a>
   </div>
   <ul class="sidebar-menu">
     @if(auth()->user()->role == 'admin')

@@ -53,10 +53,10 @@
           <tr>
             <td>{{ $room_facilities->firstItem() + $key }}</td>
             <td>{{ $room_facility->room->name }}</td>
-            <td>{{ $room_facility->facility }}</td>
+            <td>{{ $room_facility->name }}</td>
             <td>
               <a href="#modal-detail" data-toggle="modal" class="btn btn-primary m-1"
-                onclick="$('#modal-detail #detail-room_type').text('{{ $room_facility->room->name }}');$('#modal-detail #detail-facility').text('{{ $room_facility->facility }}');">Detail</a>
+                onclick="$('#modal-detail #detail-room_type').text('{{ $room_facility->room->name }}');$('#modal-detail #detail-facility').text('{{ $room_facility->name }}');">Detail</a>
               <div class="dropdown d-inline">
                 <button class="btn btn-info dropdown-toggle m-1" type="button" id="dropdownMenuButton"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,9 +64,9 @@
                 </button>
                 <div class="dropdown-menu">
                   <a href="#modal-edit" data-toggle="modal" class="dropdown-item text-warning font-weight-bold"
-                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/update');$('#modal-edit #room_type--select').attr('value', '{{ $room_facility->room->id }}');$('#modal-edit #room_type--select').text('{{ $room_facility->room->name }}');$('#modal-edit #facility').attr('value', '{{ $room_facility->facility }}');">Edit</a>
+                    onclick="$('#modal-edit #form-edit').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/update');$('#modal-edit #room_type--select').attr('value', '{{ $room_facility->room->id }}');$('#modal-edit #room_type--select').text('{{ $room_facility->room->name }}');$('#modal-edit #facility').attr('value', '{{ $room_facility->name }}');">Edit</a>
                   <a href="#modal-delete" data-toggle="modal" class="dropdown-item text-danger font-weight-bold"
-                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/destroy');$('#modal-delete #delete-room_type').text('{{ $room_facility->room->name }}');$('#modal-delete #delete-facility').text('{{ $room_facility->facility }}');">Hapus</a>
+                    onclick="$('#modal-delete #form-delete').attr('action', '/admin/room-facilities/{{ $room_facility->id }}/destroy');$('#modal-delete #delete-room_type').text('{{ $room_facility->room->name }}');$('#modal-delete #delete-facility').text('{{ $room_facility->name }}');">Hapus</a>
                 </div>
               </div>
             </td>

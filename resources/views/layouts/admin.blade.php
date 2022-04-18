@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Favotel Manager</title>
+  <title> {{ count($setting) ? strtoupper($setting[0]->name) . ' - ADMIN' : 'HOTEL RESERVATION - ADMIN' }}</title>
+  <link rel="icon" type="image/x-icon"
+    href="{{ count($setting) ? asset('/images/uploads/setting/' . $setting[0]->short_logo ) :  asset('/images/short-logo-dummy.svg') }}">
 
   <link rel="stylesheet" href="{{asset('/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('/css/all.css')}}">
@@ -33,7 +35,7 @@
       </div>
       <footer class="main-footer">
         <div class="footer-left">
-          FAVOTEL MANAGER
+          {{ count($setting) ? strtoupper($setting[0]->name) . ' MANAGER' : 'HOTEL TITLE MANAGER' }}
         </div>
       </footer>
     </div>

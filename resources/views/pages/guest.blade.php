@@ -49,6 +49,7 @@
               <th>Status</th>
               <th>Check-in</th>
               <th>Check-out</th>
+              <th>Tipe Kamar</th>
               <th>Jumlah Kamar</th>
               <th>Total Harga</th>
               <th>Aksi</th>
@@ -79,6 +80,7 @@
               </td>
               <td>{{ $reservation->check_in }}</td>
               <td>{{ $reservation->check_out }}</td>
+              <td>{{ $reservation->room->name }}</td>
               <td>{{ $reservation->total_rooms }}</td>
               <?php
                 $first_day = new DateTime($reservation->check_in);

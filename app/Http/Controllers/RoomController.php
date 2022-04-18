@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Room;
+use App\Models\RoomFacility;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +13,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::paginate(2);
+        $rooms = Room::paginate(4);
 
         return view('/pages/admin/rooms/index', compact('rooms'));
     }
@@ -79,7 +80,15 @@ class RoomController extends Controller
 
     public function destroy($id)
     {
-        Room::find($id)->delete();
+        $room = Room::find($id);
+
+        $room_facilities = RoomFacility::where('room_id', $room->id)->get();
+
+        foreach ($room_facilities as $room_facility) {
+            $room_facility->delete();
+        }
+
+        $room->delete();
 
         return redirect()->back()->with('success', 'Data Kamar berhasil dihapus');
     }

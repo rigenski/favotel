@@ -7,7 +7,9 @@ use App\Models\Guest;
 use App\Models\Reservation;
 use App\Models\Room;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
@@ -36,17 +38,25 @@ class CheckoutController extends Controller
             return redirect()->back()->with('error', 'Data Reservasi kurang lengkap!');
         }
 
-        $reservation = Reservation::create([
-            'check_in' => $request->check_in,
-            'check_out' => $request->check_out,
-            'total_rooms' => $request->total_rooms,
-            'guest_name' => $request->guest_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'status' => 'process',
-            'room_id' => $request->room_type,
-            'guest_id' => auth()->user()->guest->id,
-        ]);
+        DB::beginTransaction();
+
+        try {
+            $reservation = Reservation::create([
+                'check_in' => $request->check_in,
+                'check_out' => $request->check_out,
+                'total_rooms' => $request->total_rooms,
+                'guest_name' => $request->guest_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'status' => 'process',
+                'room_id' => $request->room_type,
+                'guest_id' => auth()->user()->guest->id,
+            ]);
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+        }
 
         session(['reservation-id' => $reservation->id]);
 

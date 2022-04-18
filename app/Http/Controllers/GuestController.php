@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Guest;
+use App\Models\Reservation;
+use App\Models\ReservationStatusHistory;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,6 +27,18 @@ class GuestController extends Controller
     {
 
         $guest = Guest::find($id);
+
+        $reservations = Reservation::where('guest_id', $guest->id)->get();
+
+        foreach ($reservations as $reservation) {
+            $reservation_status_histories = ReservationStatusHistory::where('reservation_id', $reservation->id)->get();
+
+            foreach ($reservation_status_histories as $reservation_status_history) {
+                $reservation_status_history->delete();
+            }
+
+            $reservation->delete();
+        }
 
         $guest->delete();
 

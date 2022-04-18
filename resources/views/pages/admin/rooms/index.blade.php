@@ -51,7 +51,7 @@
             <td>{{ $rooms->firstItem() + $key }}</td>
             <td>
               <img
-                src="{{ $room->image ? asset('/images/uploads/rooms/' . $room->image) : asset('/images/admin-not-found.svg') }}"
+                src="{{ $room->image ? asset('/images/uploads/rooms/' . $room->image) : asset('/images/admin-dummy.svg') }}"
                 alt="" style="max-height: 100px;max-width: 100px;">
             </td>
             <td>{{ $room->name }}</td>

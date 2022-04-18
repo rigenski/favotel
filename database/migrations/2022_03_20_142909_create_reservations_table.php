@@ -21,7 +21,7 @@ class CreateReservationsTable extends Migration
             $table->string('guest_name');
             $table->string('email');
             $table->string('phone');
-            $table->string('status');
+            $table->enum('status', ['process', 'check-in', 'check-out', 'cancel']);
             $table->foreignId('room_id')->nullable()->constrained('rooms');
             $table->foreignId('guest_id')->nullable()->constrained('guests');
             $table->timestamps();

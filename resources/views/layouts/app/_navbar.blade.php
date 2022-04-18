@@ -13,7 +13,9 @@
     </ul>
     <div class="nav-brand order-lg-2 order-1">
       <a href="{{ route('home') }}">
-        <img src="{{asset('/images/long-logo.svg')}}" alt="Logo Hotel" />
+        <img
+          src="{{ count($setting) ? asset('/images/uploads/setting/' . $setting[0]->long_logo ) :  asset('/images/long-logo-dummy.svg') }}"
+          alt="Logo Hotel" />
       </a>
     </div>
     <div class="nav-btn text-right order-lg-3 order-3 d-none d-md-block">

@@ -8,6 +8,7 @@ use App\Models\Room;
 use App\Models\Setting;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Mpdf\Mpdf;
 
 class ResultController extends Controller
@@ -19,6 +20,12 @@ class ResultController extends Controller
         if ($reservation_id) {
             $reservation = Reservation::find($reservation_id);
 
+            $get_rooms = DB::select(
+                'CALL get_rooms_by_id(' . $reservation->room_id . ')'
+            );
+
+            $room = json_decode(json_encode($get_rooms[0]), true);
+
             $first_day = new DateTime($reservation->check_in);
             $last_day = new DateTime($reservation->check_out);
             $interval = $first_day->diff($last_day);
@@ -26,7 +33,7 @@ class ResultController extends Controller
 
             $total_price = $reservation->room->price * $reservation->total_rooms * $total_days;
 
-            return view('/pages/result', compact('reservation', 'total_days', 'total_price'));
+            return view('/pages/result', compact('reservation', 'total_days', 'room', 'total_price'));
         } else {
             return redirect()->route('guest')->with('success', 'Reservasi belum dipesan');
         }
@@ -44,8 +51,8 @@ class ResultController extends Controller
 
         $total_price = $reservation->room->price * $reservation->total_rooms * $total_days;
 
-        $long_logo = asset('/images/long-logo.svg');
-        $short_logo = asset('/images/short-logo.svg');
+        $long_logo = asset('/images/uploads/setting/' . $setting->long_logo);
+        $short_logo = asset('/images/uploads/setting/' . $setting->short_logo);
 
         $html = "
                     <html>
