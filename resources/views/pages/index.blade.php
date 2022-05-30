@@ -109,7 +109,9 @@
             {{ $room_facility->name }},
             @endforeach </p>
           <div>
-            <button class="btn btn-lg btn-primary">PESAN RESERVASI</button>
+            <a href="{{ route('checkout') }}" class="btn btn-lg btn-primary">
+              PESAN RESERVASI
+            </a>
           </div>
         </div>
         @endforeach
